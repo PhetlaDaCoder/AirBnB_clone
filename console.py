@@ -1,12 +1,35 @@
 #!/usr/bin/python3
+"""Defines the HBNBCommand."""
 
 import cmd
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
+
+    """Defines the HBNBCommand command interpreter.
+
+    Attributes:
+        prompt (string): The command prompt.
+    """
+
     prompt = '(hbnb)'
+    __classes = {
+        "BaseModel",
+        "User",
+        "State",
+        "City",
+        "Place",
+        "Amenity",
+        "Review"
+    }
 
     def do_quit(self, arg):
         """Quit command to exit the program."""
