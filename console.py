@@ -110,4 +110,4 @@ class HBNBCommand(cmd.Cmd):
         attr_value = args[3].strip('"')
 
     if __name__ == '__main__':
-        HBNBCommand().cmdloop()
+        HBNBCommand().cmdloop() 
