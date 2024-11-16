@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 """Unittest for HBNBCommand class"""
 
+import os
+import sys
 import unittest
 from unittest.mock import patch
 from io import StringIO
 from console import HBNBCommand
 from models import storage
+from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 
 
@@ -82,11 +85,16 @@ class TestHBNBCommand(unittest.TestCase):
         """Test the update command"""
         new_obj = BaseModel()
         new_obj.save()
-        with patch('sys.stdout', new=StringIO()) as mock_stdout:
+
+        with patch('sys.stdout', new=StringIO()):
             self.cmd.onecmd(f'update BaseModel {new_obj.id} name "Test Name"')
-            self.assertEqual(new_obj.name, "Test Name")
+            updated_obj = storage.all()[f"BaseModel.{new_obj.id}"]
+            self.assertEqual(updated_obj.name, "Test Name")
+
+        with patch('sys.stdout', new=StringIo()):
             self.cmd.onecmd(f'update BaseModel {new_obj.id} age 25')
-            self.assertEqual(new_obj.age, 25)
+            updated_obj = storage.all()[f"BaseModel.{new_obj.id}"]
+            self.assertEqual(updated_obj.age, 25)
 
 
 if __name__ == "__main__":

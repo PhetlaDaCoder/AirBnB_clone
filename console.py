@@ -2,6 +2,7 @@
 """Defines the HBNBCommand."""
 
 import cmd
+import shlex
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
@@ -111,41 +112,31 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """Updates an instance based on class name, id, and
         attribute name/value."""
-        args = arg.split()
-        if not args:
-            print("** class name missing **")
+        args = shlex.split(args)
+
+        if len(args) < 4:
+            print("** insufficient arguments **")
             return
-        if args[0] != self.__classes:
-            print("** class doesn't exist **")
-            return
-        if len(args) < 2:
-            print("** instance id missing **")
-            return
-        instance_key = f"{args[0]}.{args[1]}"
-        instance = storage.get(instance_key)
-        if not instance:
+
+        class_name, obj_id, attr_name, attr_value = args[0],args[1],args[2],args[3]
+
+        key = f"{class_name}.{obj_id}"
+        obj = storage.all().get(key)
+        if not obj:
             print("** no instance found **")
             return
-        if len(args) < 3:
-            print("** attribute name missing **")
-            return
-        if len(args) < 4:
-            print("** value missing **")
-            return
-
-        attr_name = args[2]
-        attr_value = args[3]
-
         try:
-            if '.' in attr_value:
+            if attr_value.isdigit():
+                attr_value = int(attr_value)
+            elif attr_value.replace(".", "", 1).isdigit():
                 attr_value = float(attr_value)
             else:
-                attr_value = int(attr_value)
+                attr_value = attr_value.strip('"').strip("'")
         except ValueError:
-            attr_value = attr_value.strip('"')
+            pass
 
-        setattr(instance, attr_name, attr_value)
-        instance.save()
+        setattr(obj, attr_name, attr_value)
+        obj.save()
 
 
 if __name__ == '__main__':
