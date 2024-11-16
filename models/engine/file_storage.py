@@ -77,3 +77,17 @@ class FileStorage:
             The object if found, otherwise None.
         """
         return self.__objects.get(key)
+
+    def delete(self, obj=None):
+        """Deletes object from __objects, if it exists.
+
+        Args:
+            obj (objects): The object to delete.
+        """
+        if obj:
+            if isinstance(obj, str):
+                key = obj
+            else:
+                key = f"{obj.__class__.__name__}.{obj.id}"
+            if key in self.__objects:
+                del self.__objects[key]
