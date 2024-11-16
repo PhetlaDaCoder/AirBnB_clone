@@ -53,7 +53,7 @@ class HBNBCommand(cmd.Cmd):
         if arg != "BaseModel":
             print("** class doesn't exist **")
             return
-        new_instance = BaseModel()
+        new_instance = eval(arg)()
         new_instance.save()
         print(new_instance.id)
 
@@ -83,25 +83,29 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        if args[0] != "BaseModel":
+        if args[0] not in self.__classes:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
             print("** instance id missing **")
             return
         instance_key = f"{args[0]}.{args[1]}"
-        if storage.delete(instance_key):
-            print("Instance deleted")
-        else:
+        if not storage.get(instance_key):
             print("** no instance found **")
+            return
+        storage.delete(instance_key)
+        print("Instance deleted")
 
     def do_all(self, arg):
-        """Prints all string representations of
-        instances based on class name."""
-        if arg and arg != "BaseModel":
+        """Prints all string representations of instances.
+
+        Args:
+            arg (str): The class name (optional).
+        """
+        if arg and arg not in self.__classes:
             print("** class doesn't exist **")
             return
-        instances = storage.all("BaseModel") if arg else storage.all()
+        instances = storage.all(arg) if arg else storage.all()
         print([str(inst) for inst in instances.values()])
 
     def do_update(self, arg):
@@ -111,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        if args[0] != "BaseModel":
+        if args[0] != self.__classes:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -130,7 +134,18 @@ class HBNBCommand(cmd.Cmd):
             return
 
         attr_name = args[2]
-        attr_value = args[3].strip('"')
+        attr_value = args[3]
+
+        try:
+            if '.' in attr_value:
+                attr_value = float(attr_value)
+            else:
+                attr_value = int(attr_value)
+        except ValueError:
+            attr_value = attr_value.strip('"')
+
+        setattr(instance, attr_name, attr_value)
+        instance.save()
 
 
 if __name__ == '__main__':
