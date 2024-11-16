@@ -30,7 +30,8 @@ class FileStorage:
             dict: A dicyionary of objects
         """
         if cls:
-            return {key: obj for key, obj in self.__objects.items() if obj.__class__.__name__ == cls}
+            return {key: obj for key, obj in self.__objects.items()
+                    if obj.__class__.__name__ == cls}
         return self.__objects
 
     def new(self, obj):
@@ -67,4 +68,3 @@ class FileStorage:
             The object if found, otherwise None.
         """
         return self.__objects.get(key)
-
