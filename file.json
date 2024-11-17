@@ -1,1 +1,1 @@
-{"BaseModel.9cf4253f-da2d-4182-bfdb-9dd943d02d4e": {"id": "9cf4253f-da2d-4182-bfdb-9dd943d02d4e", "created_at": "2024-11-17T11:07:46.635475", "updated_at": "2024-11-17T11:07:46.635485", "__class__": "BaseModel"}}
+{"BaseModel.4af1bac9-8d6d-4ef3-9ab0-e6723ac1f738": {"id": "4af1bac9-8d6d-4ef3-9ab0-e6723ac1f738", "created_at": "2024-11-17T11:21:27.633640", "updated_at": "2024-11-17T11:21:27.635224", "name": "Test Name", "age": 25, "__class__": "BaseModel"}}

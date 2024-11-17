@@ -118,8 +118,9 @@ class HBNBCommand(cmd.Cmd):
             print("** insufficient arguments **")
             return
 
-        class_name, obj_id, attr_name,
-        attr_value = args[0], args[1], args[2], args[3]
+        class_name, obj_id, attr_name, attr_value = (
+                args[0], args[1], args[2], args[3]
+                )
 
         key = f"{class_name}.{obj_id}"
         obj = storage.all().get(key)

@@ -91,7 +91,7 @@ class TestHBNBCommand(unittest.TestCase):
             updated_obj = storage.all()[f"BaseModel.{new_obj.id}"]
             self.assertEqual(updated_obj.name, "Test Name")
 
-        with patch('sys.stdout', new=StringIo()):
+        with patch('sys.stdout', new=StringIO()):
             self.cmd.onecmd(f'update BaseModel {new_obj.id} age 25')
             updated_obj = storage.all()[f"BaseModel.{new_obj.id}"]
             self.assertEqual(updated_obj.age, 25)
