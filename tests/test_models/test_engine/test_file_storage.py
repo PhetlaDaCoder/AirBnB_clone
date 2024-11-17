@@ -2,6 +2,7 @@
 """Unittest for FileStorage"""
 import unittest
 import os
+import sys
 import json
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
