@@ -109,7 +109,7 @@ class HBNBCommand(cmd.Cmd):
         instances = storage.all(arg) if arg else storage.all()
         print([str(inst) for inst in instances.values()])
 
-    def do_update(self, arg):
+    def do_update(self, args):
         """Updates an instance based on class name, id, and
         attribute name/value."""
         args = shlex.split(args)
@@ -118,8 +118,8 @@ class HBNBCommand(cmd.Cmd):
             print("** insufficient arguments **")
             return
 
-        class_name, obj_id, attr_name, attr_value = args[0], args[1], args[2],
-        args[3]
+        class_name, obj_id, attr_name,
+        attr_value = args[0], args[1], args[2], args[3]
 
         key = f"{class_name}.{obj_id}"
         obj = storage.all().get(key)
