@@ -52,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         if arg != "BaseModel":
-            print("** class doesn't exist **")
+            print("** no instance found **")
             return
         new_instance = eval(arg)()
         new_instance.save()
