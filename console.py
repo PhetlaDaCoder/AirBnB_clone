@@ -112,7 +112,10 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, args):
         """Updates an instance based on class name, id, and
         attribute name/value."""
-        args = shlex.split(args)
+        try:
+            args = shlex.split(args)
+        except ValueError:
+            print("** invalid arguments: check qoutation marks **")
 
         if len(args) < 4:
             print("** insufficient arguments **")
