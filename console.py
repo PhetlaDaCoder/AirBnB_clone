@@ -116,7 +116,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         instances = storage.all(arg) if arg else storage.all()
-        print([str(inst) for inst in instances.values()])
+        print([str(instance) for instance in instances.values()])
 
     def do_update(self, args):
         """Updates an instance based on class name, id, and
@@ -159,6 +159,7 @@ class HBNBCommand(cmd.Cmd):
 
         setattr(obj, attr_name, attr_value)
         obj.save()
+        print(f"{class_name} instance {obj_id} updated")
 
 
 if __name__ == '__main__':
