@@ -1,3 +1,19 @@
+#!/usr/bin/python3
+"""Defines unittests for console.py,
+
+Unittest classes:
+    TestHBNBCommand_prompting
+    TestHBNBCommand_help
+    TestHBNBCommand_exit
+    TestHBNBCommand_create
+    TestHBNBCommand_show
+    TestHBNBCommand_all
+    TestHBNBCommand_destroy
+    TestHBNBCommand_update
+"""
+
+import os
+import sys
 import unittest
 from unittest.mock import patch
 from io import StringIO
@@ -9,7 +25,7 @@ from models.city import City
 from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
-from hbnb import HBNBCommand  # Assuming your command file is named 'hbnb.py'
+from console import HBNBCommand  # Assuming your command file is named 'hbnb.py'
 
 
 class TestHBNBCommand(unittest.TestCase):
