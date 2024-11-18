@@ -43,7 +43,7 @@ class FileStorage:
         """Serialize __objects to the JSON file __file_path."""
         odict = FileStorage.__objects
         objdict = {key: obj.to_dict() for key, obj in odict.items()}
-        with open(FileStorage.__file_path, 'w') as f:
+        with open(FileStorage.__file_path, "w") as f:
             json.dump(objdict, f)
 
     def reload(self):
@@ -65,7 +65,7 @@ class FileStorage:
                     del o["__class__"]
                     self.new(class_map[cls_name](**o))
         except FileNotFoundError:
-            return
+            pass
 
     def get(self, key):
         """Gets an object by its key.
