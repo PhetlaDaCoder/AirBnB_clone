@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 """Defines the HBNBCommand."""
 
 import cmd
@@ -23,13 +23,13 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = '(hbnb)'
     __classes = {
-        "BaseModel",
-        "User",
-        "State",
-        "City",
-        "Place",
-        "Amenity",
-        "Review"
+        "BaseModel": BaseModel,
+        "User": User,
+        "State": State,
+        "City":  City,
+        "Place": Place,
+        "Amenity": Amenity,
+        "Review": Review
     }
 
     def do_quit(self, arg):
@@ -51,10 +51,12 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
             return
-        if arg != "BaseModel":
-            print("** no instance found **")
+
+        if arg not in self.__classes:
+            print("** class doesn't exist **")
             return
-        new_instance = eval(arg)()
+
+        new_instance = self.__classes[arg]()
         new_instance.save()
         print(new_instance.id)
 
@@ -65,14 +67,16 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        if args[0] != "BaseModel":
-            print("**  no instance found **")
+        if args[0] not in self.__classes:
+            print("**  class doesn't exist **")
             return
         if len(args) < 2:
             print("** instance id missing **")
             return
+
         instance_key = f"{args[0]}.{args[1]}"
         instance = storage.get(instance_key)
+
         if instance:
             print(instance)
         else:
@@ -90,12 +94,14 @@ class HBNBCommand(cmd.Cmd):
         if len(args) < 2:
             print("** instance id missing **")
             return
+
         instance_key = f"{args[0]}.{args[1]}"
-        if not storage.get(instance_key):
+        instance = storage.get(instance_key)
+        if instance:
+            storage.delete(instance_key)
+            print("Instance deleted")
+        else:
             print("** no instance found **")
-            return
-        storage.delete(instance_key)
-        print("Instance deleted")
 
     def do_all(self, arg):
         """Prints all string representations of instances.
@@ -106,6 +112,7 @@ class HBNBCommand(cmd.Cmd):
         if arg and arg not in self.__classes:
             print("** class doesn't exist**")
             return
+
         instances = storage.all(arg) if arg else storage.all()
         print([str(inst) for inst in instances.values()])
 
@@ -124,12 +131,16 @@ class HBNBCommand(cmd.Cmd):
         class_name, obj_id, attr_name, attr_value = (
                 args[0], args[1], args[2], args[3]
                 )
+        if class_name not in self.__classes:
+            print("** class doesn't exist **")
+            return
 
         key = f"{class_name}.{obj_id}"
         obj = storage.all().get(key)
         if not obj:
             print("** no instance found **")
             return
+
         try:
             if attr_value.isdigit():
                 attr_value = int(attr_value)
@@ -139,6 +150,10 @@ class HBNBCommand(cmd.Cmd):
                 attr_value = attr_value.strip('"').strip("'")
         except ValueError:
             pass
+
+        if not hasattr(obj, attr_name):
+            print(f"** invalid attribute name **")
+            return
 
         setattr(obj, attr_name, attr_value)
         obj.save()
