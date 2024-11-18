@@ -121,10 +121,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, args):
         """Updates an instance based on class name, id, and
         attribute name/value."""
-        try:
-            args = shlex.split(args)
-        except ValueError:
-            print("** class name missing **")
+        args = shlex.split(args)
 
         if len(args) < 4:
             print("** instance id missing **")
