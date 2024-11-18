@@ -52,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         if arg != "BaseModel":
-            print("** class doesn't exist **")
+            print("** no instance found **")
             return
         new_instance = eval(arg)()
         new_instance.save()
@@ -66,7 +66,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         if args[0] != "BaseModel":
-            print("** class doesn't exist **")
+            print("** no instance found **")
             return
         if len(args) < 2:
             print("** instance id missing **")
@@ -104,7 +104,7 @@ class HBNBCommand(cmd.Cmd):
             arg (str): The class name (optional).
         """
         if arg and arg not in self.__classes:
-            print("** class doesn't exist **")
+            print("** class doesn't exist**")
             return
         instances = storage.all(arg) if arg else storage.all()
         print([str(inst) for inst in instances.values()])
