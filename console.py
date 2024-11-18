@@ -115,10 +115,10 @@ class HBNBCommand(cmd.Cmd):
         try:
             args = shlex.split(args)
         except ValueError:
-            print("** invalid arguments: check qoutation marks **")
+            print("** class name missing **")
 
         if len(args) < 4:
-            print("** insufficient arguments **")
+            print("** instance id missing **")
             return
 
         class_name, obj_id, attr_name, attr_value = (
