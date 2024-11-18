@@ -2,7 +2,9 @@
 """Defines the HBNBCommand."""
 
 import cmd
+import re
 import shlex
+from shlex import split
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
